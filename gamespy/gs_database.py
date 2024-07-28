@@ -102,7 +102,7 @@ class Transaction(object):
 
 
 class GamespyDatabase(object):
-    def __init__(self, filename='gpcm.db'):
+    def __init__(self, filename='./db/gpcm.db'):
         self.conn = sqlite3.connect(filename, timeout=10.0)
         self.conn.row_factory = sqlite3.Row
 

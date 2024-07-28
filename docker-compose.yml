@@ -4,11 +4,40 @@ services:
   backend:
     build:
       context: .
-    network_mode: "host"
-
+    networks:
+      mk:
+        ipv4_address: 172.54.42.5
+    ports:
+      - 27500:27500/udp
+      - 27900:27900/udp
+      - 27901:27901/udp
+      - 28910:28910/udp
+      - 29900:29900/udp
+      - 29901:29901/udp
+      - 29920:29920/udp
+      - 27500:27500/tcp
+      - 27900:27900/tcp
+      - 27901:27901/tcp
+      - 28910:28910/tcp
+      - 29900:29900/tcp
+      - 29901:29901/tcp
+      - 29920:29920/tcp
+    volumes:
+      - './db/:/app/db'
   proxy:
     build:
       context: tools/docker/apache-hosts
-#    environment:
-#      - DWC_HOST=example.com
-    network_mode: "host"
+    #    environment:
+    #      - DWC_HOST=example.com
+    ports:
+      - "87:80"
+    networks:
+      mk:
+        ipv4_address: 172.54.42.6
+
+networks:
+  mk:
+    driver: "bridge"
+    ipam:
+      config:
+        - subnet: 172.54.42.0/24

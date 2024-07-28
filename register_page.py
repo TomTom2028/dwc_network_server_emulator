@@ -68,7 +68,7 @@ class RegPage(resource.Resource):
 
     def update_maclist(self, request):
         address = request.getClientIP()
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         macadr = request.args['macadr'][0].strip()
         actiontype = request.args['action'][0]
         macadr = macadr.lower()
@@ -101,7 +101,7 @@ class RegPage(resource.Resource):
 
     def render_maclist(self, request):
         address = request.getClientIP()
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         responsedata = """
         <form action='updatemaclist' method='POST'>
         macadr (must be in the format of %s or %s):

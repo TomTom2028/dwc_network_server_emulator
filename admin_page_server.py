@@ -125,7 +125,7 @@ class AdminPage(resource.Resource):
 
     def update_banlist(self, request):
         address = request.getClientIP()
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         gameid = request.args['gameid'][0].upper().strip()
         ipaddr = request.args['ipaddr'][0].strip()
         actiontype = request.args['action'][0]
@@ -168,7 +168,7 @@ class AdminPage(resource.Resource):
 
     def update_consolelist(self, request):
         address = request.getClientIP()
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         macadr = request.args['macadr'][0].strip()
         actiontype = request.args['action'][0]
         if not macadr.isalnum():
@@ -217,7 +217,7 @@ class AdminPage(resource.Resource):
 
     def render_banlist(self, request):
         address = request.getClientIP()
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         logger.log(logging.INFO, "%s Viewed banlist", address)
         responsedata = """
         <a href="http://%%20:%%20@%s">[CLICK HERE TO LOG OUT]</a>
@@ -270,7 +270,7 @@ class AdminPage(resource.Resource):
         ON ij.userid = users.userid
         AND users.profileid = ij.newestpid
         ORDER BY users.gameid"""
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         banned_list = []
         for row in dbconn.cursor().execute("SELECT * FROM BANNED"):
             banned_list.append(str(row[0])+":"+str(row[1]))
@@ -368,7 +368,7 @@ class AdminPage(resource.Resource):
                        address, userid, gameid)
             return "Bad data"
 
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         if enable:
             dbconn.cursor().execute(
                 'UPDATE users SET enabled=1 '
@@ -395,7 +395,7 @@ class AdminPage(resource.Resource):
 
     def render_consolelist(self, request):
         address = request.getClientIP()
-        dbconn = sqlite3.connect('gpcm.db')
+        dbconn = sqlite3.connect('./db/gpcm.db')
         active_list = []
         for row in dbconn.cursor().execute("SELECT * FROM REGISTERED"):
             active_list.append(str(row[0]))

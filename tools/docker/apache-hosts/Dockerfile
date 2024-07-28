@@ -8,12 +8,15 @@ ENV DWC_HOST=nintendowifi.net
 
 # vhost config
 RUN echo $'IncludeOptional /usr/local/apache2/vhost.d/*.conf\n\
-ServerName localhost\n\
-HttpProtocolOptions Unsafe' >> conf/httpd.conf
+    ServerName localhost\n\
+    HttpProtocolOptions Unsafe' >> conf/httpd.conf
 
 # Enable proxy module
 RUN sed -i 's/^#LoadModule proxy_module/LoadModule proxy_module/' conf/httpd.conf
 RUN sed -i 's/^#LoadModule proxy_http_module/LoadModule proxy_http_module/' conf/httpd.conf
+
+# Change the listening port to 87
+#RUN sed -i 's/^Listen 80/Listen 87/' conf/httpd.conf
 
 # Copy vhosts
 COPY *.conf vhost.d/
